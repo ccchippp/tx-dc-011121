@@ -16,7 +16,6 @@ class SearchContainer  extends Component {
     }
 
     changeSearch = (event) => {
-        event.preventDefault()
         this.setState({
             searchText: event.target.value
         })
@@ -40,7 +39,7 @@ class SearchContainer  extends Component {
                     </div>
                 </form>
                 <div className="row justify-content-md-center">
-                {this.state.wizards.map(
+                {this.filteredWizards().map(
                     wizard => <Card wizard={wizard} key={wizard.id}/>
                 )}
                 </div>
