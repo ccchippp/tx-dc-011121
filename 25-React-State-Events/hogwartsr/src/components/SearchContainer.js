@@ -1,38 +1,36 @@
 import React, { Component } from 'react'
 
-//Components
-import StudentCard from './StudentCard'
+import Card from './Card'
 
-export default class SearchContainer extends Component {
-
+class SearchContainer  extends Component {
 
     state = {
         wizards: [],
-        searchText: ""
+        searchText: ''
     }
-
-
     componentDidMount = async () => {
-        const res = await fetch('http://localhost:3001/wizards')
-        const wizards = await res.json()
+        const response = await fetch ('http://localhost:3002/wizards')
+        const wizards = await response.json()
 
-
-        this.setState({ wizards })
+        this.setState({wizards: wizards})
     }
 
     changeSearch = (event) => {
-        this.setState({searchText: event.target.value})
+        event.preventDefault()
+        this.setState({
+            searchText: event.target.value
+        })
     }
 
-    filteredWizards() {
-        const filteredWizards = this.state.wizards.filter(wizard => wizard.house.toLowerCase().includes(this.state.searchText.toLowerCase()))
+    filteredWizards(){
+        const filteredWizards = 
+        this.state.wizards.filter(wizard => wizard.house.toLowerCase()
+        .includes(this.state.searchText.toLowerCase()
+        ))
         return filteredWizards
     }
 
-
-    render(){
-        
-   
+    render() {
         return (
             <div className="container mt-5">
                 <form>
@@ -42,12 +40,14 @@ export default class SearchContainer extends Component {
                     </div>
                 </form>
                 <div className="row justify-content-md-center">
-                    {this.filteredWizards().map(
-                        wizard => <StudentCard wizard={wizard} key={wizard.id} />
-                    )}
+                {this.state.wizards.map(
+                    wizard => <Card wizard={wizard} key={wizard.id}/>
+                )}
                 </div>
             </div>
         )
     }
-}
 
+    }
+
+export default SearchContainer
